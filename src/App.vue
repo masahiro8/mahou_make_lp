@@ -6,6 +6,9 @@
         <StartButton url="https://app.mahoumake.com" />
       </Balloon>
     </HWrapper>
+    <HWrapper>
+      <Vrmonkey />
+    </HWrapper>
     <!-- ここから背景 -->
     <div>
       <Square v-for="index in squares" :key="index" />
@@ -23,6 +26,7 @@ import Lip from "./components/lip/Lip.vue";
 import Casset from "./components/casset/Casset";
 import Balloon from "./components/balloon/Balloon";
 import StartButton from "./components/startbutton/StartButton";
+import Vrmonkey from "./components/vrmonkey/Vrmonkey";
 // import Info from "./components/info/Info";
 // import Images from "./components/images/Images";
 
@@ -43,6 +47,7 @@ export default {
     HWrapper,
     StartButton,
     Balloon,
+    Vrmonkey,
     // Info,
     // Images,
   },
