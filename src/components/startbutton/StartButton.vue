@@ -1,6 +1,6 @@
 <template>
   <div class="StartButtonFrame">
-    <button class="StartButton">
+    <button @click="onClick" class="StartButton">
       <img :src="start" alt="" />
     </button>
   </div>
@@ -11,6 +11,14 @@ export default {
     return {
       start: "https://storage.googleapis.com/mahou_make/Assets/Start.png",
     };
+  },
+  props: {
+    url: String,
+  },
+  methods: {
+    onClick() {
+      location.href = this.url;
+    },
   },
 };
 </script>

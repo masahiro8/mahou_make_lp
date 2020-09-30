@@ -3,13 +3,9 @@
     <Header />
     <HWrapper>
       <Balloon message="Let's try!">
-        <StartButton />
+        <StartButton url="https://app.mahoumake.com" />
       </Balloon>
-      <!-- <Info /> -->
     </HWrapper>
-    <!-- <HWrapper>
-      <Images/>
-    </HWrapper> -->
     <!-- ここから背景 -->
     <div>
       <Square v-for="index in squares" :key="index" />
