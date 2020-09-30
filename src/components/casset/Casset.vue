@@ -11,9 +11,9 @@ import * as _ from "lodash";
 export default {
   data: () => {
     return {
-      Casset: "https://storage.cloud.google.com/mahou_make/Assets/Casset.png",
-      Reel1: "https://storage.cloud.google.com/mahou_make/Assets/Reel1.png",
-      Reel2: "https://storage.cloud.google.com/mahou_make/Assets/Reel2.png",
+      Casset: "https://storage.googleapis.com/mahou_make/Assets/Casset.png",
+      Reel1: "https://storage.googleapis.com/mahou_make/Assets/Reel1.png",
+      Reel2: "https://storage.googleapis.com/mahou_make/Assets/Reel2.png",
       move: 0,
       id: _.uniqueId() + 1000,
       style: "",
