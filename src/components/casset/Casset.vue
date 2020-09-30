@@ -1,22 +1,19 @@
 <template>
-  <div :id="'parallax'+id" class="Casset" :style="framestyle">
-    <img class="reel1" :src="Reel1" alt>
-    <img class="reel2" :src="Reel2" alt>
-    <img class="cover" :src="Casset" alt>
+  <div :id="'parallax' + id" class="Casset" :style="framestyle">
+    <img class="reel1" :src="Reel1" alt />
+    <img class="reel2" :src="Reel2" alt />
+    <img class="cover" :src="Casset" alt />
   </div>
 </template>
 <script>
 import { parallaxCallback } from "../../util/parallaxCallback";
 import * as _ from "lodash";
-import Casset from "../../assets/Casset.png";
-import Reel1 from "../../assets/Reel1.png";
-import Reel2 from "../../assets/Reel2.png";
 export default {
   data: () => {
     return {
-      Casset,
-      Reel1,
-      Reel2,
+      Casset: "https://storage.cloud.google.com/mahou_make/Assets/Casset.png",
+      Reel1: "https://storage.cloud.google.com/mahou_make/Assets/Reel1.png",
+      Reel2: "https://storage.cloud.google.com/mahou_make/Assets/Reel2.png",
       move: 0,
       id: _.uniqueId() + 1000,
       style: "",
@@ -24,11 +21,11 @@ export default {
       top: _.random(document.body.clientHeight + 100), //縦位置をランダムに
       posx: _.random(document.body.clientWidth / 2) * -1, //初期値
       scale: 0.3 + Math.random() * 0.8, //ラインの高さ
-      speed: 1 + _.random(10) * (_.random(2) == 1 ? -1 : 1) //スクロールで拡大する速度
+      speed: 1 + _.random(10) * (_.random(2) == 1 ? -1 : 1), //スクロールで拡大する速度
     };
   },
   mounted() {
-    parallaxCallback("#parallax" + this.id)(this.speed, this.top, move => {
+    parallaxCallback("#parallax" + this.id)(this.speed, this.top, (move) => {
       if (!move) return;
       this.move = move;
       this.moving();
@@ -42,11 +39,12 @@ export default {
     moving() {
       const _transform = `left:${this.posx}px;top:${
         this.top
-      }px;transform:scale(${this.scale}) rotate(-45deg) translateX(${this.move *
-        100}px)`;
+      }px;transform:scale(${this.scale}) rotate(-45deg) translateX(${
+        this.move * 100
+      }px)`;
       this.framestyle = `${_transform}`;
-    }
-  }
+    },
+  },
 };
 </script>
 
