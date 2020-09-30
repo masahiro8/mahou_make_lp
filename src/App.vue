@@ -2,11 +2,14 @@
   <div id="app">
     <Header />
     <HWrapper>
+      <Balloon message="Let's try!">
+        <StartButton />
+      </Balloon>
       <!-- <Info /> -->
     </HWrapper>
-    <HWrapper>
-      <!-- <Images/> -->
-    </HWrapper>
+    <!-- <HWrapper>
+      <Images/>
+    </HWrapper> -->
     <!-- ここから背景 -->
     <div>
       <Square v-for="index in squares" :key="index" />
@@ -22,6 +25,8 @@ import HWrapper from "./components/common/HorizontalWrapper";
 import Square from "./components/square/Square";
 import Lip from "./components/lip/Lip.vue";
 import Casset from "./components/casset/Casset";
+import Balloon from "./components/balloon/Balloon";
+import StartButton from "./components/startbutton/StartButton";
 // import Info from "./components/info/Info";
 // import Images from "./components/images/Images";
 
@@ -40,6 +45,8 @@ export default {
     Casset,
     Header,
     HWrapper,
+    StartButton,
+    Balloon,
     // Info,
     // Images,
   },
@@ -61,7 +68,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  height: 4000px;
+  height: 2000px;
   width: 100%;
   overflow: hidden;
   position: relative;
