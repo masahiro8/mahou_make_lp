@@ -2,7 +2,7 @@
   <div id="app">
     <Header />
     <HWrapper>
-      <Balloon message="Let's try!">
+      <Balloon message="〇〇〇〇〇">
         <StartButton url="https://app.mahoumake.com" />
       </Balloon>
     </HWrapper>

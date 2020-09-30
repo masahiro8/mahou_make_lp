@@ -12,8 +12,8 @@
       <!-- パララックス -->
       <ParallaxWrapper :rate="0.2">
         <div class="message">
-          <p>Anytime, anywhere</p>
-          <p>Let’s try on !!😂😂</p>
+          <p>Wake up to Make up,</p>
+          <p>Right here Right Now!😂😂</p>
         </div>
       </ParallaxWrapper>
     </div>
