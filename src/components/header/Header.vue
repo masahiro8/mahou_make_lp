@@ -1,5 +1,5 @@
 <template>
-  <header :id="'parallax'+id" :style="framestyle">
+  <header :id="'parallax' + id" :style="framestyle">
     <h1 ref="h1" :style="style">
       <div class="inner" ref="inner" :style="innerstyle">
         <ParallaxWrapper :rate="0.1">
@@ -34,20 +34,20 @@ export default {
       innerstyle: "",
       framestyle: "",
       speedRate: 120, //パララックス速度
-      speed: 1 + _.random(6) * (_.random(2) == 1 ? -1 : 1) //速度
+      speed: 1 + _.random(6) * (_.random(2) == 1 ? -1 : 1), //速度
     };
   },
   components: {
-    ParallaxWrapper
+    ParallaxWrapper,
   },
   mounted() {
-    parallaxCallback("#parallax" + this.id)(this.speed, 0, move => {
+    parallaxCallback("#parallax" + this.id)(this.speed, 0, () => {
       const enter = topCallBack(this.$refs.h1, 0);
       this.innerstyle = enter
         ? "transform: translateY(-200px);"
         : "transform: translateY(0);";
     });
-  }
+  },
 };
 </script>
 <style lang="scss" scoped>

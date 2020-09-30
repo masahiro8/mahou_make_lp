@@ -37,7 +37,7 @@ export default {
   async mounted() {
     const winHeight = window.innerHeight;
 
-    scrolling(scroll_y => {
+    scrolling(() => {
       const enter_top = topCallBack(
         this.$refs.marker_top,
         -winHeight * this.displayRange

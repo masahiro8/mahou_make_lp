@@ -1,16 +1,16 @@
 <template>
   <div class="images" ref="images">
-    <SegmentationTitle title="DESIGN" class="title"/>
+    <SegmentationTitle title="DESIGN" class="title" />
     <!-- ここにスワイプを入れる -->
     <Swiper class="imagesTable" ref="swiper" :options="swiperOption">
       <SwiperSlide>
-        <ImageCell/>
+        <ImageCell />
       </SwiperSlide>
       <SwiperSlide>
-        <ImageCell/>
+        <ImageCell />
       </SwiperSlide>
       <SwiperSlide>
-        <ImageCell/>
+        <ImageCell />
       </SwiperSlide>
       <div class="swiper-pagination" slot="pagination"></div>
     </Swiper>
@@ -31,23 +31,23 @@ export default {
         centeredSlides: true,
         pagination: {
           el: ".swiper-pagination",
-          clickable: true
-        }
-      }
+          clickable: true,
+        },
+      },
     };
   },
   components: {
     SegmentationTitle,
     ImageCell,
     Swiper,
-    SwiperSlide
+    SwiperSlide,
   },
   mounted() {},
   computed: {
     swiper() {
       return this.$refs.swiper.$swiper;
-    }
-  }
+    },
+  },
 };
 </script>
 <style lang="scss" scoped>
@@ -61,16 +61,16 @@ export default {
   transform: translateX(-100%);
 }
 
-.images /deep/ .swiper-container {
+.images >>> .swiper-container {
   padding-bottom: 36px;
   width: 894px;
 }
 
-.images /deep/ .swiper-pagination {
+.images >>> .swiper-pagination {
   bottom: 0;
 }
 
-.images /deep/ .swiper-pagination-bullet {
+.images >>> .swiper-pagination-bullet {
   width: 11px;
   height: 11px;
   margin: 5px;
@@ -79,7 +79,7 @@ export default {
   opacity: 1;
 }
 
-.images /deep/ .swiper-pagination-bullet-active {
+.images >>> .swiper-pagination-bullet-active {
   background-color: #FF50C3;
 }
 </style>
