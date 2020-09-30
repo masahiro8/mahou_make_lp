@@ -1,17 +1,17 @@
 <template>
   <div id="app">
-    <Header/>
+    <Header />
     <HWrapper>
-      <Info/>
+      <!-- <Info /> -->
     </HWrapper>
     <HWrapper>
-      <Images/>
+      <!-- <Images/> -->
     </HWrapper>
     <!-- ここから背景 -->
     <div>
-      <Square v-for="index in squares" :key="index"/>
-      <Lip v-for="index in lips" :key="index"/>
-      <Casset v-for="index in cassets" :key="index"/>
+      <Square v-for="index in squares" :key="index" />
+      <Lip v-for="index in lips" :key="index" />
+      <Casset v-for="index in cassets" :key="index" />
     </div>
   </div>
 </template>
@@ -22,8 +22,8 @@ import HWrapper from "./components/common/HorizontalWrapper";
 import Square from "./components/square/Square";
 import Lip from "./components/lip/Lip.vue";
 import Casset from "./components/casset/Casset";
-import Info from "./components/info/Info";
-import Images from "./components/images/Images";
+// import Info from "./components/info/Info";
+// import Images from "./components/images/Images";
 
 export default {
   name: "App",
@@ -31,7 +31,7 @@ export default {
     return {
       squares: [],
       lips: [],
-      cassets: []
+      cassets: [],
     };
   },
   components: {
@@ -40,14 +40,14 @@ export default {
     Casset,
     Header,
     HWrapper,
-    Info,
-    Images
+    // Info,
+    // Images,
   },
   mounted() {
     this.squares = Array(200);
     this.lips = Array(10);
     this.cassets = Array(10);
-  }
+  },
 };
 </script>
 

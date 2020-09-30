@@ -1,12 +1,9 @@
 <template>
   <div class="info">
-    <SegmentationTitle title="INFO"/>
+    <SegmentationTitle title="INFO" />
     <ul class="infoTable">
       <li>
-        <div class="title">9/30 MAHOU MAKE をリリース</div>
-      </li>
-      <li>
-        <div class="title">10/1 MAHOU MAKE をリリース MAHOU MAKE をリリース</div>
+        <div class="title">10/1 MAHOU MAKEを公開しました</div>
       </li>
     </ul>
   </div>
@@ -15,8 +12,8 @@
 import SegmentationTitle from "../common/SegmentationTitle";
 export default {
   components: {
-    SegmentationTitle
-  }
+    SegmentationTitle,
+  },
 };
 </script>
 <style lang="scss">
