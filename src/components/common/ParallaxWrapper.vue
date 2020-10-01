@@ -23,7 +23,7 @@ export default {
   mounted() {
     const rect = this.$refs.wrapper.getBoundingClientRect();
     scrolling(scroll_y => {
-      const m = (scroll_y - window.innerHeight / 2 + rect.y) * this.rate;
+      //const m = (scroll_y - window.innerHeight / 2 + rect.y) * this.rate;
       // console.log(m);
       this.style = `transform:translateY(${-m}px)`;
     });
