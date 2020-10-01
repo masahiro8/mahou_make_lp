@@ -26,6 +26,7 @@ export default {
   .text {
     font-size: 32px;
     font-weight: bold;
+    letter-spacing: 0.2em;
     color: black;
   }
 }
