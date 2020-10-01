@@ -11,23 +11,22 @@ export default {
   data: () => {
     return {
       top: 0,
-      style: ""
+      style: "",
     };
   },
   props: {
     rate: {
       type: Number,
-      defaultValue: 0.1
-    }
+      defaultValue: 0.1,
+    },
   },
   mounted() {
     const rect = this.$refs.wrapper.getBoundingClientRect();
-    scrolling(scroll_y => {
-      //const m = (scroll_y - window.innerHeight / 2 + rect.y) * this.rate;
-      // console.log(m);
+    scrolling((scroll_y) => {
+      const m = (scroll_y - window.innerHeight / 2 + rect.y) * this.rate;
       this.style = `transform:translateY(${-m}px)`;
     });
-  }
+  },
 };
 </script>
 <style lang="scss" scoped>
