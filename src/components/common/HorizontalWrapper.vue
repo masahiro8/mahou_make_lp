@@ -1,10 +1,14 @@
 <template>
   <!-- 画面の高さを設定 -->
-  <div :id="'parallax'+id" class="hwrapper">
+  <div :id="'parallax' + id" class="hwrapper">
     <!-- コンポーネント上部 -->
     <div class="marker_top" ref="marker_top"></div>
     <!-- 画面に入ったら位置を固定する -->
-    <div :id="'wrapper'+id" class="scrollWrapper" :class="fixed?'fixed':''">
+    <div
+      :id="'wrapper' + id"
+      class="scrollWrapper"
+      :class="fixed ? 'fixed' : ''"
+    >
       <!-- ここがアニメーションする -->
       <div class="inner" ref="inner" :style="innerstyle">
         <slot></slot>
@@ -18,7 +22,7 @@
 import {
   scrolling,
   topCallBack,
-  bottomCallBack
+  bottomCallBack,
 } from "../../util/scrollCallback";
 import * as _ from "lodash";
 
@@ -31,7 +35,7 @@ export default {
       speed: 1 + _.random(20) * (_.random(2) == 1 ? -1 : 1), //速度
       fixed: false,
       delay: null, //遅延実行
-      displayRange: 0.3 //表示範囲マージン幅
+      displayRange: 0.4, //表示範囲マージン幅
     };
   },
   async mounted() {
@@ -71,7 +75,7 @@ export default {
       }, 300);
     });
   },
-  methods: {}
+  methods: {},
 };
 </script>
 <style lang="scss" scoped>

@@ -5,6 +5,7 @@
         <ParallaxWrapper :rate="0.1">
           <p class="MAHOU">MAHOU</p>
           <p class="MAKE">MAKE</p>
+          <Beta />
         </ParallaxWrapper>
       </div>
     </h1>
@@ -24,6 +25,7 @@ import { parallaxCallback } from "../../util/parallaxCallback";
 import { topCallBack } from "../../util/scrollCallback";
 import ParallaxWrapper from "../common/ParallaxWrapper";
 import * as _ from "lodash";
+import Beta from "./Beta";
 
 export default {
   name: "Header",
@@ -39,6 +41,7 @@ export default {
   },
   components: {
     ParallaxWrapper,
+    Beta,
   },
   mounted() {
     parallaxCallback("#parallax" + this.id)(this.speed, 0, () => {
