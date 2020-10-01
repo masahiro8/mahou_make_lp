@@ -70,7 +70,6 @@ export const parallaxCallback = (selector) => {
   };
 
   return (speed = 1.0, posY, callback) => {
-    console.log("para = ", speed, posY);
     init(speed, posY, callback);
   };
 };
