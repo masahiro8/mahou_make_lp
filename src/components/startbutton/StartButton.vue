@@ -17,7 +17,7 @@ export default {
   },
   methods: {
     onClick() {
-      location.href = this.url;
+      window.location.href = this.url;
     },
   },
 };
