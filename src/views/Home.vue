@@ -3,7 +3,9 @@
     <Header />
     <HWrapper>
       <Balloon message="Try!">
-        <StartButton url="https://app.mahoumake.com" />
+        <StartButton
+          url="https://app.mahoumake.com/?utm_source=lp&utm_medium=referral&utm_campaign=lp"
+        />
       </Balloon>
     </HWrapper>
     <HWrapper>

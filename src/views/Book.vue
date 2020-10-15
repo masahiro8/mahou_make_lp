@@ -15,7 +15,7 @@
           <div class="col-image">
             <div class="image">
               <!-- <img :src="getImage(product.images[0])" /> -->
-              <Thumbnail />
+              <Thumbnail :src="getImage(product.images[0])" />
             </div>
           </div>
           <div class="col-date">{{ editDate(product.updatedate) }}</div>
@@ -23,29 +23,31 @@
           <div class="col-brand">{{ getBrandName(product.brand) }}</div>
           <div class="col-product">{{ product.title }}</div>
           <div class="col-link">
-            <button @click="openModal(product.id)">link</button>
+            <button
+              class="link-button"
+              @click="openModal(product.jsonBookName)"
+            >
+              link
+            </button>
           </div>
         </li>
       </ul>
       <div>
         <Popup @close="closeModal" v-if="modal">
           <p>Link URL</p>
-          <!-- TODO: 正しいproduct_idを読み込めるようにする -->
           <p class="script">
-            https://book.mahoumake.com/?mahou={{ product_id }}
+            https://book.mahoumake.com/?mahou={{ json_book_name }}
           </p>
-          <!-- iframeのsrcを確認する -->
           <p>埋め込みスクリプト</p>
           <div class="script-group">
             <button class="copy-button" @click="copyToClipboard">
               <ContentCopy :size="20" fillColor="#999" />
             </button>
-            <!-- TODO: 正しいproduct_idを読み込めるようにする -->
-            <p class="script" id="copyFrom">
-              &lt;iframe allow="camera" width="375" height="812"
-              src="https://book.mahoumake.com/?mahou={{ product_id }}" >
-              &lt;/iframe>
-            </p>
+            <div class="script" id="copyFrom">
+              &lt;iframe allow="camera;microphone"
+              src="https://book.mahoumake.com/?mahou={{ json_book_name }}"
+              frameborder="0" width="100%" height="100%" &gt; &lt;/iframe&gt;
+            </div>
           </div>
         </Popup>
       </div>
@@ -54,8 +56,6 @@
 </template>
 <script>
 import * as _ from "lodash";
-// TODO:bookからprojectsを読み込むように変更する
-import projects from "../../public/data/projects.json";
 import { SEGMENTS } from "../constants";
 import Thumbnail from "../components/thumbnail/Thumbnail.vue";
 import Popup from "../components/popup/Popup.vue";
@@ -65,25 +65,30 @@ export default {
   data: () => {
     return {
       SEGMENTS,
+      projects: null,
       products: [],
       brands: [],
       images: [],
       modal: false,
-      product_id: null,
+      json_book_name: null,
     };
   },
   components: { Thumbnail, Popup, ContentCopy },
-  created() {
+  async created() {
+    let response = await fetch(
+      "https://book.mahoumake.com/books/projects.json"
+    );
+    this.projects = await response.json();
+
     this.setProducts();
   },
   methods: {
     setProducts() {
-      //TODO:bookからprojectsを読み込むように変更する
-      if (_.isNil(projects)) return;
+      if (_.isNil(this.projects)) return;
 
       let items = [];
       _.forEach(SEGMENTS, (segments_value) => {
-        let categoryItems = projects[segments_value];
+        let categoryItems = this.projects[segments_value];
         if (_.isNil(categoryItems)) return;
 
         _.forEach(categoryItems, (value) => {
@@ -97,16 +102,14 @@ export default {
       if (items.length > 0)
         sortedItems = _.orderBy(items, "updatedate", "desc");
       this.products = sortedItems;
-      this.brands = projects["brands"];
-      this.images = projects["images"];
+      this.brands = this.projects["brands"];
+      this.images = this.projects["images"];
     },
     getImage(id) {
       if (_.isNil(id)) return "";
-      const _image = _.find(this.images, (image) => {
-        return image.id === id;
-      });
+      const _image = _.find(this.images, ["id", id]);
       //TODO:bookのuploadsから画像を読み込む
-      return _image ? `../../uploads${_image.file_path}` : "";
+      return _image ? `https://lab.backham.biz/uploads${_image.file_path}` : "";
     },
     editDate(date) {
       if (_.isNil(date)) return "";
@@ -119,7 +122,7 @@ export default {
     },
     openModal(id) {
       this.modal = true;
-      this.product_id = id;
+      this.json_book_name = id;
     },
     closeModal() {
       this.modal = false;
@@ -226,6 +229,12 @@ export default {
   padding: 8px 10px;
   border: 1px solid #999;
   background: #eee;
+}
+
+.link-button {
+  background: #eee;
+  border-radius: 100px;
+  padding: 0 12px;
 }
 
 .copy-button {
