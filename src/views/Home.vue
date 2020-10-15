@@ -9,7 +9,7 @@
       </Balloon>
     </HWrapper>
     <HWrapper>
-      <Vrmonkey />
+      <MahouBook />
     </HWrapper>
     <!-- ここから背景 -->
     <div>
@@ -28,7 +28,7 @@ import Lip from "../components/lip/Lip.vue";
 import Casset from "../components/casset/Casset";
 import Balloon from "../components/balloon/Balloon";
 import StartButton from "../components/startbutton/StartButton";
-import Vrmonkey from "../components/vrmonkey/Vrmonkey";
+import MahouBook from "../components/mahoubook/MahouBook";
 
 export default {
   data: () => {
@@ -46,7 +46,7 @@ export default {
     Casset,
     Balloon,
     StartButton,
-    Vrmonkey,
+    MahouBook,
   },
   mounted() {
     this.squares = Array(200);
