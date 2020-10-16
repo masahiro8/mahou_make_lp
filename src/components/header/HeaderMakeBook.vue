@@ -1,11 +1,10 @@
 <template>
-  <header :id="'parallax' + id" :style="framestyle">
+  <header :id="'parallax' + id" class="frame" :style="framestyle">
     <h1 ref="h1" :style="style">
       <div class="inner" ref="inner" :style="innerstyle">
         <ParallaxWrapper :rate="0.1">
-          <p class="MAHOU">MAHOU</p>
-          <p class="MAKE">MAKE</p>
-          <Beta />
+          <p class="MAHOU">MAHOU BOOKを</p>
+          <p class="MAKE">WEBサイトに表示する方法</p>
         </ParallaxWrapper>
       </div>
     </h1>
@@ -13,9 +12,9 @@
       <!-- パララックス -->
       <ParallaxWrapper :rate="0.2">
         <div class="message">
-          <p>Wake up to Make up,</p>
-          <p>Right here Right Now!😂😂</p>
-          <p>LIVE VIRTUAL MAKE-UP CAMERA</p>
+          <p>自分のECサイトやWEBサイトで</p>
+          <p>無料で、簡単にバーチャルメイクができる！！</p>
+          <p>それが「MAHOU BOOK」！！</p>
         </div>
       </ParallaxWrapper>
     </div>
@@ -26,7 +25,6 @@ import { parallaxCallback } from "../../util/parallaxCallback";
 import { topCallBack } from "../../util/scrollCallback";
 import ParallaxWrapper from "../common/ParallaxWrapper";
 import * as _ from "lodash";
-import Beta from "./Beta";
 
 export default {
   name: "Header",
@@ -42,7 +40,6 @@ export default {
   },
   components: {
     ParallaxWrapper,
-    Beta,
   },
   mounted() {
     parallaxCallback("#parallax" + this.id)(this.speed, 0, () => {
@@ -54,4 +51,4 @@ export default {
   },
 };
 </script>
-<style lang="scss" src="./header.scss" scoped></style>
+<style lang="scss" src="./headermakebook.scss" scoped></style>

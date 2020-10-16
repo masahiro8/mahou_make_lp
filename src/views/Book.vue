@@ -1,6 +1,6 @@
 <template>
   <div class="book">
-    <h1 class="heading">商品情報</h1>
+    <h1 class="heading">MAHOU BOOK</h1>
     <div>
       <div class="header">
         <p class="col-image"></p>
