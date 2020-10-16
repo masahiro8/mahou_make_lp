@@ -1,6 +1,11 @@
 <template>
   <div class="book">
-    <h1 class="heading">MAHOU BOOK</h1>
+    <h1 class="heading">
+      MAHOU BOOK
+      <router-link to="/makebook" class="howtomakebook"
+        >バーチャルメイクをWEBサイトに導入する手順はこちら</router-link
+      >
+    </h1>
     <div>
       <div class="header">
         <p class="col-image"></p>
@@ -160,6 +165,23 @@ export default {
   margin: 0 auto;
   background: white;
   text-align: left;
+}
+
+.howtomakebook {
+  font-size: 12px;
+  padding: 4px 8px;
+  background-color: #eee;
+  display: inline-block;
+  border-radius: 4px;
+  letter-spacing: 0;
+  color: #333;
+  text-decoration: none;
+  vertical-align: middle;
+  margin: 0 8px;
+  &:hover {
+    color: black;
+    background-color: #f3f3f3;
+  }
 }
 
 .heading {
