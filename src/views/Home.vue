@@ -9,6 +9,10 @@
       </Balloon>
     </HWrapper>
     <HWrapper>
+      <Video />
+    </HWrapper>
+
+    <HWrapper>
       <MahouBook />
     </HWrapper>
     <!-- ここから背景 -->
@@ -29,6 +33,7 @@ import Casset from "../components/casset/Casset";
 import Balloon from "../components/balloon/Balloon";
 import StartButton from "../components/startbutton/StartButton";
 import MahouBook from "../components/mahoubook/MahouBook";
+import Video from "../components/video/Video";
 
 export default {
   data: () => {
@@ -47,6 +52,7 @@ export default {
     Balloon,
     StartButton,
     MahouBook,
+    Video,
   },
   mounted() {
     this.squares = Array(200);
