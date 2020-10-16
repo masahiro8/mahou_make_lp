@@ -7,9 +7,6 @@
   </div>
 </template>
 <script>
-/**
- * windowの高さと同じ高さのDOM
- */
 export default {
   computed: {
     winHeight() {
