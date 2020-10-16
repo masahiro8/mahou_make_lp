@@ -10,7 +10,7 @@
               controls
               muted
               autoplay
-              playinline
+              playsinline
               loop
               src="https://storage.googleapis.com/mahou_make/Assets/mv1_32.mp4"
             ></video>
@@ -20,7 +20,7 @@
               controls
               muted
               autoplay
-              playinline
+              playsinline
               loop
               src="https://storage.googleapis.com/mahou_make/Assets/mv2_32.mp4"
             ></video>
