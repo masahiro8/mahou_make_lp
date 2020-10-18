@@ -63,6 +63,7 @@
         </Popup>
       </div>
     </div>
+    <Logo />
   </div>
 </template>
 <script>
@@ -71,6 +72,7 @@ import { SEGMENTS } from "../constants";
 import Thumbnail from "../components/thumbnail/Thumbnail.vue";
 import Popup from "../components/popup/Popup.vue";
 import ContentCopy from "vue-material-design-icons/ContentCopy.vue";
+import Logo from "../components/logo/logo";
 
 export default {
   data: () => {
@@ -84,7 +86,7 @@ export default {
       json_book_name: null,
     };
   },
-  components: { Thumbnail, Popup, ContentCopy },
+  components: { Thumbnail, Popup, ContentCopy, Logo },
   async created() {
     let response = await fetch(
       "https://book.mahoumake.com/books/projects.json"

@@ -109,6 +109,8 @@
     <HWrapper>
       <VRMonkey />
     </HWrapper>
+    <!-- LOGO -->
+    <Logo />
     <!-- 装飾 -->
     <Square v-for="index in squares" :key="index" />
   </div>
@@ -119,6 +121,7 @@ import Square from "../components/square/Square";
 import SectionPage from "../components/common/SectionPage";
 import HWrapper from "../components/common/HorizontalWrapper";
 import VRMonkey from "../components/vrmonkey/Vrmonkey";
+import Logo from "../components/logo/logo";
 export default {
   data: () => {
     return {
@@ -132,6 +135,7 @@ export default {
     SectionPage,
     HWrapper,
     VRMonkey,
+    Logo,
   },
   mounted() {
     this.squares = Array(200);
