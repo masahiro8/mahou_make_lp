@@ -2,8 +2,14 @@
   <div class="book">
     <h1 class="heading">
       MAHOU BOOK
-      <router-link to="/makebook" class="howtomakebook"
+      <router-link to="/makebook" class="link"
         >バーチャルメイクをWEBサイトに導入する手順はこちら</router-link
+      >
+      <a
+        href="https://docs.google.com/forms/d/1dK6efYfg8DXEGFvg3OFsnvTOUVgDvUe9lOcFz_uMuto"
+        class="link"
+        target="_blank"
+        >お問い合わせはこちら</a
       >
     </h1>
     <div>
@@ -167,7 +173,7 @@ export default {
   text-align: left;
 }
 
-.howtomakebook {
+.link {
   font-size: 12px;
   padding: 4px 8px;
   background-color: #eee;

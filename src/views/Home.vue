@@ -23,6 +23,9 @@
     <HWrapper>
       <MahouBook />
     </HWrapper>
+    <HWrapper>
+      <VRMonkey />
+    </HWrapper>
     <!-- ここから背景 -->
     <div>
       <Square v-for="index in squares" :key="index" />
@@ -41,6 +44,7 @@ import Casset from "../components/casset/Casset";
 import Balloon from "../components/balloon/Balloon";
 import StartButton from "../components/startbutton/StartButton";
 import MahouBook from "../components/mahoubook/MahouBook";
+import VRMonkey from "../components/vrmonkey/Vrmonkey";
 
 export default {
   data: () => {
@@ -59,6 +63,7 @@ export default {
     Balloon,
     StartButton,
     MahouBook,
+    VRMonkey,
   },
   mounted() {
     this.squares = Array(200);
@@ -70,7 +75,7 @@ export default {
 <style lang="scss" scoped>
 @import "../style/config.scss";
 .home {
-  height: 3000px;
+  height: 3600px;
   background-color: #50FFEA;
   overflow: hidden;
   position: relative;

@@ -106,6 +106,9 @@
         </div>
       </div>
     </SectionPage>
+    <HWrapper>
+      <VRMonkey />
+    </HWrapper>
     <!-- 装飾 -->
     <Square v-for="index in squares" :key="index" />
   </div>
@@ -114,6 +117,8 @@
 import Header from "../components/header/HeaderMakeBook";
 import Square from "../components/square/Square";
 import SectionPage from "../components/common/SectionPage";
+import HWrapper from "../components/common/HorizontalWrapper";
+import VRMonkey from "../components/vrmonkey/Vrmonkey";
 export default {
   data: () => {
     return {
@@ -125,6 +130,8 @@ export default {
     Header,
     Square,
     SectionPage,
+    HWrapper,
+    VRMonkey,
   },
   mounted() {
     this.squares = Array(200);
@@ -140,7 +147,7 @@ export default {
 @import "../style/config.scss";
 
 .MAHOU_BOOK {
-  height: 5000px;
+  height: 5600px;
   background-color: #50FFEA;
   overflow: hidden;
   position: relative;
