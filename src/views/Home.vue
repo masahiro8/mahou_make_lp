@@ -70,7 +70,7 @@ export default {
 <style lang="scss" scoped>
 @import "../style/config.scss";
 .home {
-  height: 2000px;
+  height: 3000px;
   background-color: #50FFEA;
   overflow: hidden;
   position: relative;
