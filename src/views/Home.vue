@@ -2,6 +2,18 @@
   <div class="home">
     <Header />
     <HWrapper>
+      <div class="movie">
+        <iframe
+          width="302"
+          height="640"
+          src="https://www.youtube.com/embed/zhFHjfRiLGU"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+        ></iframe>
+      </div>
+    </HWrapper>
+    <HWrapper>
       <Balloon message="Try!">
         <StartButton
           url="https://app.mahoumake.com/?utm_source=lp&utm_medium=referral&utm_campaign=lp"
@@ -62,5 +74,14 @@ export default {
   background-color: #50FFEA;
   overflow: hidden;
   position: relative;
+}
+.movie {
+  height: 640px;
+  video {
+    height: 100%;
+  }
+  @media screen and (max-width: 480px) {
+    height: 440px;
+  }
 }
 </style>
