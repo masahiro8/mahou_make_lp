@@ -25,7 +25,6 @@
         <li v-for="(product, index) in products" :key="index" class="product">
           <div class="col-image">
             <div class="image">
-              <!-- <img :src="getImage(product.images[0])" /> -->
               <Thumbnail :src="getImage(product.images[0])" />
             </div>
           </div>
@@ -168,7 +167,7 @@ export default {
     },
     getBrandName(id) {
       if (_.isNil(id)) return "";
-      let brand = this.brands[id];
+      let brand = _.find(this.brands, ["id", id]);
       return brand ? brand["title"] : "";
     },
     openModal(id) {
@@ -177,6 +176,9 @@ export default {
     },
     closeModal() {
       this.modal = false;
+      this.createdLink = false;
+      this.url = document.getElementById("url").value = null;
+      localStorage.removeItem(this.json_book_name);
     },
     copyToClipboard() {
       let textVal = document.getElementById("copyFrom").innerHTML;
