@@ -45,19 +45,54 @@
       </ul>
       <div>
         <Popup @close="closeModal" v-if="modal">
-          <p>Link URL</p>
-          <p class="script">
-            https://book.mahoumake.com/?mahou={{ json_book_name }}
-          </p>
+          <p>購入ページのURLを入力</p>
+          <div class="input-group">
+            <div class="input-text-wrapper">
+              <input
+                class="input-text"
+                type="text"
+                id="url"
+                name="url"
+                value=""
+                placeholder="https://your-ec-site.com"
+              />
+              <input
+                class="create-button"
+                type="button"
+                value="リンク生成"
+                @click="create()"
+              />
+            </div>
+            <div>
+              <input
+                class="clear-button"
+                type="button"
+                value="クリア"
+                @click="clear()"
+              />
+            </div>
+          </div>
+
+          <p>リンクURL</p>
+          <div class="script-group">
+            <a
+              class="copy-button"
+              :href="getLinkUrl"
+              target="_blank"
+              rel="noopener noreferrer"
+              ><ExternalLink :size="20" fillColor="#999"
+            /></a>
+            <p class="script">
+              {{ getLinkUrl }}
+            </p>
+          </div>
           <p>埋め込みスクリプト</p>
           <div class="script-group">
             <button class="copy-button" @click="copyToClipboard">
               <ContentCopy :size="20" fillColor="#999" />
             </button>
             <div class="script" id="copyFrom">
-              &lt;iframe allow="camera;microphone"
-              src="https://book.mahoumake.com/?mahou={{ json_book_name }}"
-              frameborder="0" width="100%" height="100%" &gt; &lt;/iframe&gt;
+              {{ getScript }}
             </div>
           </div>
         </Popup>
@@ -72,6 +107,7 @@ import { SEGMENTS } from "../constants";
 import Thumbnail from "../components/thumbnail/Thumbnail.vue";
 import Popup from "../components/popup/Popup.vue";
 import ContentCopy from "vue-material-design-icons/ContentCopy.vue";
+import ExternalLink from "vue-material-design-icons/OpenInNew.vue";
 import Logo from "../components/logo/logo";
 
 export default {
@@ -83,10 +119,12 @@ export default {
       brands: [],
       images: [],
       modal: false,
+      url: null,
       json_book_name: null,
+      createLink: false,
     };
   },
-  components: { Thumbnail, Popup, ContentCopy, Logo },
+  components: { Thumbnail, Popup, ContentCopy, ExternalLink, Logo },
   async created() {
     let response = await fetch(
       "https://book.mahoumake.com/books/projects.json"
@@ -159,6 +197,34 @@ export default {
       let retVal = document.execCommand("copy");
       bodyElm.removeChild(copyFrom);
       return retVal;
+    },
+    create() {
+      this.createLink = true;
+      this.url = document.getElementById("url").value;
+      localStorage.setItem(this.json_book_name, this.url);
+    },
+    clear() {
+      this.createdLink = false;
+      this.url = document.getElementById("url").value = null;
+      localStorage.setItem(this.json_book_name, this.url);
+    },
+  },
+  computed: {
+    getLinkUrl() {
+      if (this.url && this.createLink) {
+        return `https://book.mahoumake.com/?mahou=${this.json_book_name}&url=${this.url}`;
+      } else {
+        return "";
+      }
+    },
+    getScript() {
+      if (this.url && this.createLink) {
+        return `<iframe allow="camera;microphone"
+              src="https://book.mahoumake.com/?mahou=${this.json_book_name}&url=${this.url}"
+              frameborder="0" width="100%" height="100%"> </iframe>`;
+      } else {
+        return "";
+      }
     },
   },
 };
@@ -256,12 +322,47 @@ export default {
 
 .script {
   margin-bottom: 16px;
-  padding: 8px 10px;
+  padding: 8px 24px 8px 10px;
+  min-height: 40px;
   border: 1px solid #999;
   background: #eee;
+  word-wrap: break-word;
+}
+
+.input-group {
+  margin-bottom: 16px;
+}
+
+.input-text-wrapper {
+  margin-bottom: 4px;
+}
+
+.input-text {
+  margin-right: 8px;
+  padding: 8px 10px;
+  min-width: calc(100% - 112px);
+  border: 1px solid #999;
+  border-radius: 4px;
+}
+
+.create-button {
+  outline: none;
+  background: #eee;
+  border-radius: 100px;
+  padding: 0 12px;
+}
+
+.clear-button {
+  display: block;
+  outline: none;
+  border: 1px solid #333;
+  border-radius: 100px;
+  margin-left: auto;
+  padding: 0 12px;
 }
 
 .link-button {
+  outline: none;
   background: #eee;
   border-radius: 100px;
   padding: 0 12px;
