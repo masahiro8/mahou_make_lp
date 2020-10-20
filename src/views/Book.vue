@@ -202,7 +202,8 @@ export default {
     },
     create() {
       this.createLink = true;
-      this.url = document.getElementById("url").value;
+      const inputUrl = document.getElementById("url").value;
+      this.url = encodeURIComponent(inputUrl);
       localStorage.setItem(this.json_book_name, this.url);
     },
     clear() {
