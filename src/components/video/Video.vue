@@ -7,6 +7,7 @@
       height="640"
       preload="none"
       controls
+      playsinline
       webkit-playsinline
       muted
       autoplay
@@ -26,9 +27,6 @@ export default {
   methods: {
     playVide() {
       const video = document.getElementById("video");
-
-      // var playPromise = video.play();
-
       if (Hls.isSupported()) {
         this.hls = new Hls();
         this.hls.loadSource(
@@ -45,44 +43,10 @@ export default {
           video.play();
         });
       }
-
-      // if (playPromise !== undefined) {
-      //   playPromise
-      //     .then((_) => {
-      //       // Automatic playback started!
-      //       // Show playing UI.
-      //      video.pause();
-      //       video.currentTime = 0;
-      //     })
-      //     .catch((error) => {
-      //       // Auto-play was prevented
-      //       // Show paused UI.
-      //       console.log("error");
-      //     });
-      // }
     },
   },
   mounted() {
     window.addEventListener("scroll", this.playVide);
-
-    const video = document.getElementById("video");
-
-    // Show loading animation.
-    var playPromise = video.play();
-
-    if (playPromise !== undefined) {
-      playPromise
-        .then((_) => {
-          // Automatic playback started!
-          // Show playing UI.
-          console.log("video play");
-        })
-        .catch((error) => {
-          // Auto-play was prevented
-          // Show paused UI.
-          console.log("error");
-        });
-    }
   },
 };
 </script>
