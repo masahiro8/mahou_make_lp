@@ -1,6 +1,9 @@
 <template>
   <div class="home">
     <Header />
+        <HWrapper>
+      <Video />
+    </HWrapper>
     <HWrapper>
       <Balloon message="Try!">
         <StartButton
@@ -8,10 +11,6 @@
         />
       </Balloon>
     </HWrapper>
-    <HWrapper>
-      <Video />
-    </HWrapper>
-
     <HWrapper>
       <MahouBook />
     </HWrapper>
