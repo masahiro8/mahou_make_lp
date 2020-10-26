@@ -34,50 +34,37 @@ export default {
           "https://storage.googleapis.com/mahou_make/Assets/MAHOUMAKE_HLS/MAHOUMAKE_EYESHAOW.m3u8"
         );
         this.hls.attachMedia(video);
-
-        // Show loading animation.
         var playPromise = video.play();
-
         if (playPromise !== undefined) {
           playPromise
             .then((_) => {
-              // Automatic playback started!
-              // Show playing UI.
               this.clear_id = null;
               if (this.clear_id) clearTimeout(this.clear_id);
               this.clear_id = setTimeout(() => {
-                video.play();
-              }, 1000);
+                playPromise;
+              }, 2000);
               console.log("video play");
             })
             .catch((error) => {
-              // Auto-play was prevented
-              // Show paused UI.
               console.log("error");
             });
         }
       } else if (video.canPlayType("application/vnd.apple.mpegurl")) {
         video.src =
           "https://storage.googleapis.com/mahou_make/Assets/MAHOUMAKE_HLS/MAHOUMAKE_EYESHAOW.m3u8";
-        video.addEventListener("canplay", function () {
-          // Show loading animation.
+        video.addEventListener("canplay", () => {
           var playPromise = video.play();
-
           if (playPromise !== undefined) {
             playPromise
               .then((_) => {
-                // Automatic playback started!
-                // Show playing UI.
                 this.clear_id = null;
                 if (this.clear_id) clearTimeout(this.clear_id);
                 this.clear_id = setTimeout(() => {
-                  video.play();
-                }, 1000);
+                  playPromise;
+                }, 2000);
                 console.log("video play");
               })
               .catch((error) => {
-                // Auto-play was prevented
-                // Show paused UI.
                 console.log("error");
               });
           }
@@ -87,29 +74,6 @@ export default {
   },
   mounted() {
     window.addEventListener("scroll", this.playVide);
-    // const video = document.getElementById("video");
-
-    // // Show loading animation.
-    // var playPromise = video.play();
-
-    // if (playPromise !== undefined) {
-    //   playPromise
-    //     .then((_) => {
-    //       // Automatic playback started!
-    //       // Show playing UI.
-    //       this.clear_id = null;
-    //       if (this.clear_id) clearTimeout(this.clear_id);
-    //       this.clear_id = setTimeout(() => {
-    //         video.play();
-    //       }, 1000);
-    //       console.log("video play");
-    //     })
-    //     .catch((error) => {
-    //       // Auto-play was prevented
-    //       // Show paused UI.
-    //       console.log("error");
-    //     });
-    // }
   },
 };
 </script>
