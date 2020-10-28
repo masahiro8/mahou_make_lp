@@ -6,24 +6,12 @@
       <div class="MAHOU_BOOK_SECTION">
         <div class="MAHOU_IMAGE">
           <div class="MAHOU_VIDEO">
-            <video
-              controls
-              muted
-              autoplay
-              playsinline
-              loop
-              src="https://storage.googleapis.com/mahou_make/Assets/mv1_32.mp4"
-            ></video>
+            <video id="video1" controls muted autoplay playsinline loop></video>
+            {{ scrollY }}
           </div>
           <div class="MAHOU_VIDEO">
-            <video
-              controls
-              muted
-              autoplay
-              playsinline
-              loop
-              src="https://storage.googleapis.com/mahou_make/Assets/mv2_32.mp4"
-            ></video>
+            <video id="video2" controls muted autoplay playsinline loop></video>
+            {{ scrollY }}
           </div>
         </div>
       </div>
@@ -114,11 +102,18 @@
 import Header from "../components/header/HeaderMakeBook";
 import Square from "../components/square/Square";
 import SectionPage from "../components/common/SectionPage";
+
+import Hls from "hls.js";
+
 export default {
   data: () => {
     return {
       squares: [],
       docYScale: 5,
+      hls: new Hls(),
+      timer1: null,
+      timer2: null,
+      scrollY: 0,
     };
   },
   components: {
@@ -126,8 +121,126 @@ export default {
     Square,
     SectionPage,
   },
+  methods: {
+    handleScroll() {
+      this.scrollY = window.scrollY;
+    },
+    playVide1() {
+      if (1300 > this.scrollY) {
+        const video1 = document.getElementById("video1");
+        if (Hls.isSupported()) {
+          this.hls = new Hls();
+          this.hls.loadSource(
+            "https://storage.googleapis.com/mahou_make/Assets/MAHOUMAKE_HLS/makebook1.m3u8"
+          );
+          this.hls.attachMedia(video1);
+          var playPromise = video1.play();
+          if (playPromise !== undefined) {
+            playPromise
+              .then((_) => {
+                this.timer1 = null;
+                if (this.timer1) clearTimeout(this.timer1);
+                this.timer1 = setTimeout(() => {
+                  playPromise;
+                }, 1000);
+                console.log("video play");
+              })
+              .catch((error) => {
+                console.log("error");
+              });
+          }
+        } else if (video1.canPlayType("application/vnd.apple.mpegurl")) {
+          video1.src =
+            "https://storage.googleapis.com/mahou_make/Assets/MAHOUMAKE_HLS/makebook1.m3u8";
+          video1.addEventListener("canplay", () => {
+            var playPromise = video1.play();
+            if (playPromise !== undefined) {
+              playPromise
+                .then((_) => {
+                  this.timer1 = null;
+                  if (this.timer1) clearTimeout(this.timer1);
+                  this.timer1 = setTimeout(() => {
+                    playPromise;
+                  }, 1000);
+                  console.log("video play");
+                })
+                .catch((error) => {
+                  console.log("error");
+                });
+            }
+          });
+        }
+      }
+    },
+    playVide2() {
+      const video2 = document.getElementById("video2");
+      if (1300 > this.scrollY) {
+        if (Hls.isSupported()) {
+          this.hls = new Hls();
+          this.hls.loadSource(
+            "https://storage.googleapis.com/mahou_make/Assets/MAHOUMAKE_HLS/makebook2.m3u8"
+          );
+          this.hls.attachMedia(video2);
+          var playPromise = video2.play();
+          if (playPromise !== undefined) {
+            playPromise
+              .then((_) => {
+                this.timer2 = null;
+                if (this.timer2) clearTimeout(this.timer2);
+                this.timer2 = setTimeout(() => {
+                  playPromise;
+                }, 1000);
+                console.log("video play");
+              })
+              .catch((error) => {
+                console.log("error");
+              });
+          }
+        } else if (video2.canPlayType("application/vnd.apple.mpegurl")) {
+          video2.src =
+            "https://storage.googleapis.com/mahou_make/Assets/MAHOUMAKE_HLS/makebook2.m3u8";
+          video2.addEventListener("canplay", () => {
+            var playPromise = video2.play();
+            if (playPromise !== undefined) {
+              playPromise
+                .then((_) => {
+                  this.timer2 = null;
+                  if (this.timer2) clearTimeout(this.timer2);
+                  this.timer2 = setTimeout(() => {
+                    playPromise;
+                  }, 1000);
+                  console.log("video play");
+                })
+                .catch((error) => {
+                  console.log("error");
+                });
+            }
+          });
+        }
+      }
+    },
+    Scroll() {
+      const timer3 = null;
+      const timer4 = null;
+      const scroll1 = window.addEventListener("scroll", this.playVide1);
+      const scroll2 = window.addEventListener("scroll", this.playVide2);
+      this.timer3 = setTimeout(() => {
+        if (this.timer3) clearTimeout(this.timer3);
+        scroll1();
+        console.log("timer 3");
+      }, 10000);
+      this.timer4 = setTimeout(() => {
+        if (this.timer4) clearTimeout(this.timer4);
+        scroll2();
+        console.log("timer 4");
+      }, 10000);
+    },
+  },
   mounted() {
     this.squares = Array(200);
+    window.addEventListener("scroll", this.handleScroll);
+    window.addEventListener("scroll", this.playVide1);
+    window.addEventListener("scroll", this.playVide2);
   },
   computed: {
     winHeight() {

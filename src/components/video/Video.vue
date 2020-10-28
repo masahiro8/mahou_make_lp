@@ -31,7 +31,7 @@ export default {
       if (Hls.isSupported()) {
         this.hls = new Hls();
         this.hls.loadSource(
-          "https://storage.googleapis.com/mahou_make/Assets/MAHOUMAKE_HLS/MAHOUMAKE_EYESHAOW.m3u8"
+          "https://storage.googleapis.com/mahou_make/Assets/MAHOUMAKE_HLS/makebook2.m3u8"
         );
         this.hls.attachMedia(video);
         var playPromise = video.play();

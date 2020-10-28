@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <Header />
-        <HWrapper>
+    <HWrapper>
       <Video />
     </HWrapper>
     <HWrapper>
@@ -14,6 +14,7 @@
     <HWrapper>
       <MahouBook />
     </HWrapper>
+
     <!-- ここから背景 -->
     <div>
       <Square v-for="index in squares" :key="index" />
@@ -33,6 +34,7 @@ import Balloon from "../components/balloon/Balloon";
 import StartButton from "../components/startbutton/StartButton";
 import MahouBook from "../components/mahoubook/MahouBook";
 import Video from "../components/video/Video";
+import MakeBook from "./MakeBook";
 
 export default {
   data: () => {
