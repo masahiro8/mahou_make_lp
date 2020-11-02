@@ -4,7 +4,7 @@
       <div class="inner" ref="inner" :style="innerstyle">
         <ParallaxWrapper :rate="0.1">
           <p class="MAHOU">MAHOU BOOKを</p>
-          <p class="MAKE">WEBサイトに表示する方法</p>
+          <p class="MAKE">WEBサイトに表示する方法!!!!</p>
         </ParallaxWrapper>
       </div>
     </h1>

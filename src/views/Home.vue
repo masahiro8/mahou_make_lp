@@ -46,6 +46,7 @@ import StartButton from "../components/startbutton/StartButton";
 import MahouBook from "../components/mahoubook/MahouBook";
 import VRMonkey from "../components/vrmonkey/Vrmonkey";
 
+
 export default {
   data: () => {
     return {

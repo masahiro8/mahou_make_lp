@@ -6,24 +6,10 @@
       <div class="MAHOU_BOOK_SECTION">
         <div class="MAHOU_IMAGE">
           <div class="MAHOU_VIDEO">
-            <video
-              controls
-              muted
-              autoplay
-              playsinline
-              loop
-              src="https://storage.googleapis.com/mahou_make/Assets/mv1_32.mp4"
-            ></video>
+            <video id="video1" controls muted playsinline autoplay loop></video>
           </div>
           <div class="MAHOU_VIDEO">
-            <video
-              controls
-              muted
-              autoplay
-              playsinline
-              loop
-              src="https://storage.googleapis.com/mahou_make/Assets/mv2_32.mp4"
-            ></video>
+            <video id="video2" controls muted playsinline autoplay loop></video>
           </div>
         </div>
       </div>
@@ -119,14 +105,24 @@
 import Header from "../components/header/HeaderMakeBook";
 import Square from "../components/square/Square";
 import SectionPage from "../components/common/SectionPage";
+import Hls from "hls.js";
 import HWrapper from "../components/common/HorizontalWrapper";
 import VRMonkey from "../components/vrmonkey/Vrmonkey";
 import Logo from "../components/logo/logo";
+
 export default {
   data: () => {
     return {
       squares: [],
       docYScale: 5,
+      hls: new Hls(),
+      isPlaying1: false,
+      isPlaying2: false,
+      scrollY: 0,
+      timer1: null,
+      timer2: null,
+      checkVideoPlay: null,
+      screenHeight: 0,
     };
   },
   components: {
@@ -137,13 +133,143 @@ export default {
     VRMonkey,
     Logo,
   },
+  methods: {
+    handleScroll() {
+      this.scrollY = window.scrollY;
+    },
+    playVide1() {
+      // 再生中の場合何もしない
+      if (this.isPlaying1) return;
+
+      const videoUrl1 =
+        "https://storage.googleapis.com/mahou_make/Assets/MAHOUMAKE_HLS/makebook1.m3u8";
+      if (700 > this.scrollY) {
+        const video1 = document.getElementById("video1");
+
+        // 再生中はplayVide1を無効化
+        this.isPlaying1 = true;
+        // 終了時、再度再生できるようにする。
+        video1.addEventListener("ended", (event) => {
+          this.isPlaying1 = false;
+        });
+
+        if (Hls.isSupported()) {
+          this.hls = new Hls();
+          this.hls.loadSource(videoUrl1);
+          this.hls.attachMedia(video1);
+          var playPromise = video1.play();
+          if (playPromise !== undefined) {
+            playPromise
+              .then((_) => {
+                this.timer1 = null;
+                if (this.timer1) clearTimeout(this.timer1);
+                this.timer1 = setTimeout(() => {
+                  playPromise;
+                }, 1000);
+              })
+              .catch((error) => {
+                console.log("error");
+              });
+          }
+        } else if (video1.canPlayType("application/vnd.apple.mpegurl")) {
+          video1.src =
+            "https://storage.googleapis.com/mahou_make/Assets/MAHOUMAKE_HLS/makebook1.m3u8";
+          video1.addEventListener("canplay", () => {
+            var playPromise = video1.play();
+            if (playPromise !== undefined) {
+              playPromise
+                .then((_) => {
+                  this.timer1 = null;
+                  if (this.timer1) clearTimeout(this.timer1);
+                  this.timer1 = setTimeout(() => {
+                    playPromise;
+                  }, 1000);
+                  console.log(this.checkVideoPlay);
+                })
+                .catch((error) => {
+                  console.log("error");
+                });
+            }
+          });
+        }
+      }
+    },
+    playVide2() {
+      // 再生中の場合何もしない
+      if (this.isPlaying2) return;
+
+      const videoUrl2 =
+        "https://storage.googleapis.com/mahou_make/Assets/MAHOUMAKE_HLS/book2.m3u8";
+      if (700 > this.scrollY) {
+        const video2 = document.getElementById("video2");
+
+        // 再生中はplayVide1を無効化
+        this.isPlaying2 = true;
+        // 終了時、再度再生できるようにする。
+        video2.addEventListener("ended", (event) => {
+          this.isPlaying2 = false;
+        });
+
+        if (Hls.isSupported()) {
+          this.hls = new Hls();
+          this.hls.loadSource(videoUrl2);
+          this.hls.attachMedia(video2);
+          var playPromise = video2.play();
+          if (playPromise !== undefined) {
+            playPromise
+              .then((_) => {
+                this.timer1 = null;
+                if (this.timer1) clearTimeout(this.timer1);
+                this.timer1 = setTimeout(() => {
+                  playPromise;
+                }, 1000);
+              })
+              .catch((error) => {
+                console.log("error");
+              });
+          }
+        } else if (video2.canPlayType("application/vnd.apple.mpegurl")) {
+          video2.src =
+            "https://storage.googleapis.com/mahou_make/Assets/MAHOUMAKE_HLS/book2.m3u8";
+          video2.addEventListener("canplay", () => {
+            var playPromise = video2.play();
+            if (playPromise !== undefined) {
+              playPromise
+                .then((_) => {
+                  this.timer1 = null;
+                  if (this.timer1) clearTimeout(this.timer1);
+                  this.timer1 = setTimeout(() => {
+                    playPromise;
+                    this.checkVideoPlay = true;
+                  }, 1000);
+                })
+                .catch((error) => {
+                  console.log("error");
+                });
+            }
+          });
+        }
+      }
+    },
+  },
   mounted() {
     this.squares = Array(200);
+    window.addEventListener("scroll", this.handleScroll);
+
+    window.addEventListener("scroll", () => {
+      this.playVide1();
+      this.playVide2();
+    });
+
+    // 画面の縦のサイズを取得
+    this.screenHeight = window.innerHeight;
   },
-  computed: {
-    winHeight() {
-      return window.innerHeight;
-    },
+  computed: {},
+  beforeDestroy() {
+    window.removeEventListener("scroll", () => {
+      this.playVide1();
+      this.playVide2();
+    });
   },
 };
 </script>
