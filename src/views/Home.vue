@@ -2,7 +2,16 @@
   <div class="home">
     <Header />
     <HWrapper>
-      <Video />
+      <div class="movie">
+        <iframe
+          width="302"
+          height="640"
+          src="https://www.youtube.com/embed/zhFHjfRiLGU"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+        ></iframe>
+      </div>
     </HWrapper>
     <HWrapper>
       <Balloon message="Try!">
@@ -14,7 +23,9 @@
     <HWrapper>
       <MahouBook />
     </HWrapper>
-
+    <HWrapper>
+      <VRMonkey />
+    </HWrapper>
     <!-- ここから背景 -->
     <div>
       <Square v-for="index in squares" :key="index" />
@@ -33,8 +44,8 @@ import Casset from "../components/casset/Casset";
 import Balloon from "../components/balloon/Balloon";
 import StartButton from "../components/startbutton/StartButton";
 import MahouBook from "../components/mahoubook/MahouBook";
-import Video from "../components/video/Video";
-import MakeBook from "./MakeBook";
+import VRMonkey from "../components/vrmonkey/Vrmonkey";
+
 
 export default {
   data: () => {
@@ -53,7 +64,7 @@ export default {
     Balloon,
     StartButton,
     MahouBook,
-    Video,
+    VRMonkey,
   },
   mounted() {
     this.squares = Array(200);
@@ -65,9 +76,18 @@ export default {
 <style lang="scss" scoped>
 @import "../style/config.scss";
 .home {
-  height: 2000px;
+  height: 3600px;
   background-color: #50FFEA;
   overflow: hidden;
   position: relative;
+}
+.movie {
+  height: 640px;
+  video {
+    height: 100%;
+  }
+  @media screen and (max-width: 480px) {
+    height: 440px;
+  }
 }
 </style>

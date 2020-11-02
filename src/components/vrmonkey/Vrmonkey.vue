@@ -1,10 +1,21 @@
 <template>
-  <a class="vrmonkey" href="http://backham.me">
-    <div class="image anim">
-      <img :src="img" alt="" />
-    </div>
-    <div class="name anim">Backham Co., Ltd.</div>
-  </a>
+  <div>
+    <a class="vrmonkey" href="http://backham.me">
+      <div class="image anim">
+        <img :src="img" alt="" />
+      </div>
+      <div class="name anim">Backham Co., Ltd.</div>
+    </a>
+    <br />
+    <br />
+    <br />
+    <a
+      href="https://docs.google.com/forms/d/1dK6efYfg8DXEGFvg3OFsnvTOUVgDvUe9lOcFz_uMuto"
+      target="_blank"
+      class="name link"
+      >CONTACT</a
+    >
+  </div>
 </template>
 <script>
 export default {
@@ -42,6 +53,11 @@ export default {
   text-decoration: none;
   color: $magenta;
 }
+
+.link {
+  text-decoration: underline;
+}
+
 .image {
   width: 240px;
   img {
