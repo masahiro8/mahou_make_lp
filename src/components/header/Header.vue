@@ -14,7 +14,7 @@
       <ParallaxWrapper :rate="0.2">
         <div class="message">
           <p>Wake up to Make up,</p>
-          <p>Right here Right Now!😂😂</p>
+          <p>Right here Right Now😂😂</p>
           <p>LIVE VIRTUAL MAKE-UP CAMERA</p>
         </div>
       </ParallaxWrapper>
