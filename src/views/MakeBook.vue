@@ -6,12 +6,10 @@
       <div class="MAHOU_BOOK_SECTION">
         <div class="MAHOU_IMAGE">
           <div class="MAHOU_VIDEO">
-            <video id="video1" controls muted autoplay playsinline loop></video>
-            {{ scrollY }}
+            <video id="video1" controls muted playsinline autoplay loop></video>
           </div>
           <div class="MAHOU_VIDEO">
-            <video id="video2" controls muted autoplay playsinline loop></video>
-            {{ scrollY }}
+            <video id="video2" controls muted playsinline autoplay loop></video>
           </div>
         </div>
       </div>
@@ -111,9 +109,13 @@ export default {
       squares: [],
       docYScale: 5,
       hls: new Hls(),
+      isPlaying1: false,
+      isPlaying2: false,
+      scrollY: 0,
       timer1: null,
       timer2: null,
-      scrollY: 0,
+      checkVideoPlay: null,
+      screenHeight: 0,
     };
   },
   components: {
@@ -126,13 +128,24 @@ export default {
       this.scrollY = window.scrollY;
     },
     playVide1() {
-      if (1300 > this.scrollY) {
+      // 再生中の場合何もしない
+      if (this.isPlaying1) return;
+
+      const videoUrl1 =
+        "https://storage.googleapis.com/mahou_make/Assets/MAHOUMAKE_HLS/makebook1.m3u8";
+      if (700 > this.scrollY) {
         const video1 = document.getElementById("video1");
+
+        // 再生中はplayVide1を無効化
+        this.isPlaying1 = true;
+        // 終了時、再度再生できるようにする。
+        video1.addEventListener("ended", (event) => {
+          this.isPlaying1 = false;
+        });
+
         if (Hls.isSupported()) {
           this.hls = new Hls();
-          this.hls.loadSource(
-            "https://storage.googleapis.com/mahou_make/Assets/MAHOUMAKE_HLS/makebook1.m3u8"
-          );
+          this.hls.loadSource(videoUrl1);
           this.hls.attachMedia(video1);
           var playPromise = video1.play();
           if (playPromise !== undefined) {
@@ -143,7 +156,6 @@ export default {
                 this.timer1 = setTimeout(() => {
                   playPromise;
                 }, 1000);
-                console.log("video play");
               })
               .catch((error) => {
                 console.log("error");
@@ -162,7 +174,7 @@ export default {
                   this.timer1 = setTimeout(() => {
                     playPromise;
                   }, 1000);
-                  console.log("video play");
+                  console.log(this.checkVideoPlay);
                 })
                 .catch((error) => {
                   console.log("error");
@@ -173,24 +185,34 @@ export default {
       }
     },
     playVide2() {
-      const video2 = document.getElementById("video2");
-      if (1300 > this.scrollY) {
+      // 再生中の場合何もしない
+      if (this.isPlaying2) return;
+
+      const videoUrl2 =
+        "https://storage.googleapis.com/mahou_make/Assets/MAHOUMAKE_HLS/book2.m3u8";
+      if (700 > this.scrollY) {
+        const video2 = document.getElementById("video2");
+
+        // 再生中はplayVide1を無効化
+        this.isPlaying2 = true;
+        // 終了時、再度再生できるようにする。
+        video2.addEventListener("ended", (event) => {
+          this.isPlaying2 = false;
+        });
+
         if (Hls.isSupported()) {
           this.hls = new Hls();
-          this.hls.loadSource(
-            "https://storage.googleapis.com/mahou_make/Assets/MAHOUMAKE_HLS/makebook2.m3u8"
-          );
+          this.hls.loadSource(videoUrl2);
           this.hls.attachMedia(video2);
           var playPromise = video2.play();
           if (playPromise !== undefined) {
             playPromise
               .then((_) => {
-                this.timer2 = null;
-                if (this.timer2) clearTimeout(this.timer2);
-                this.timer2 = setTimeout(() => {
+                this.timer1 = null;
+                if (this.timer1) clearTimeout(this.timer1);
+                this.timer1 = setTimeout(() => {
                   playPromise;
                 }, 1000);
-                console.log("video play");
               })
               .catch((error) => {
                 console.log("error");
@@ -198,18 +220,18 @@ export default {
           }
         } else if (video2.canPlayType("application/vnd.apple.mpegurl")) {
           video2.src =
-            "https://storage.googleapis.com/mahou_make/Assets/MAHOUMAKE_HLS/makebook2.m3u8";
+            "https://storage.googleapis.com/mahou_make/Assets/MAHOUMAKE_HLS/book2.m3u8";
           video2.addEventListener("canplay", () => {
             var playPromise = video2.play();
             if (playPromise !== undefined) {
               playPromise
                 .then((_) => {
-                  this.timer2 = null;
-                  if (this.timer2) clearTimeout(this.timer2);
-                  this.timer2 = setTimeout(() => {
+                  this.timer1 = null;
+                  if (this.timer1) clearTimeout(this.timer1);
+                  this.timer1 = setTimeout(() => {
                     playPromise;
+                    this.checkVideoPlay = true;
                   }, 1000);
-                  console.log("video play");
                 })
                 .catch((error) => {
                   console.log("error");
@@ -219,33 +241,25 @@ export default {
         }
       }
     },
-    Scroll() {
-      const timer3 = null;
-      const timer4 = null;
-      const scroll1 = window.addEventListener("scroll", this.playVide1);
-      const scroll2 = window.addEventListener("scroll", this.playVide2);
-      this.timer3 = setTimeout(() => {
-        if (this.timer3) clearTimeout(this.timer3);
-        scroll1();
-        console.log("timer 3");
-      }, 10000);
-      this.timer4 = setTimeout(() => {
-        if (this.timer4) clearTimeout(this.timer4);
-        scroll2();
-        console.log("timer 4");
-      }, 10000);
-    },
   },
   mounted() {
     this.squares = Array(200);
     window.addEventListener("scroll", this.handleScroll);
-    window.addEventListener("scroll", this.playVide1);
-    window.addEventListener("scroll", this.playVide2);
+
+    window.addEventListener("scroll", () => {
+      this.playVide1();
+      this.playVide2();
+    });
+
+    // 画面の縦のサイズを取得
+    this.screenHeight = window.innerHeight;
   },
-  computed: {
-    winHeight() {
-      return window.innerHeight;
-    },
+  computed: {},
+  beforeDestroy() {
+    window.removeEventListener("scroll", () => {
+      this.playVide1();
+      this.playVide2();
+    });
   },
 };
 </script>
