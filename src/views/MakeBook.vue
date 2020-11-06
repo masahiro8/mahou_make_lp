@@ -132,22 +132,26 @@ export default {
     Logo,
   },
   methods: {
-    playVide1() {
+    playVide() {
+      // video1
       // 再生中の場合何もしない
-      if (this.isPlaying1) return;
-      const videoUrl1 =
+      if (this.isPlaying) return;
+
+      const videoUrl =
         "https://storage.googleapis.com/mahou_make/Assets/MAHOUMAKE_HLS/makebook1.m3u8";
       if (700 > this.scrollY) {
         const video1 = document.getElementById("video1");
-        // 再生中はplayVide1を無効化
-        this.isPlaying1 = true;
+
+        // 再生中はplayVideを無効化
+        this.isPlaying = true;
         // 終了時、再度再生できるようにする。
         video1.addEventListener("ended", (event) => {
-          this.isPlaying1 = false;
+          this.isPlaying = false;
         });
+
         if (Hls.isSupported()) {
           this.hls = new Hls();
-          this.hls.loadSource(videoUrl1);
+          this.hls.loadSource(videoUrl);
           this.hls.attachMedia(video1);
           var playPromise = video1.play();
           if (playPromise !== undefined) {
@@ -157,7 +161,10 @@ export default {
                 if (this.timer1) clearTimeout(this.timer1);
                 this.timer1 = setTimeout(() => {
                   playPromise;
+                  this.checkVideoPlay = true;
+                  console.log(this.checkVideoPlay);
                 }, 1000);
+                console.log("video play");
               })
               .catch((error) => {
                 console.log("error");
@@ -175,8 +182,8 @@ export default {
                   if (this.timer1) clearTimeout(this.timer1);
                   this.timer1 = setTimeout(() => {
                     playPromise;
+                    this.checkVideoPlay = true;
                   }, 1000);
-                  console.log(this.checkVideoPlay);
                 })
                 .catch((error) => {
                   console.log("error");
@@ -185,20 +192,23 @@ export default {
           });
         }
       }
-    },
-    playVide2() {
+
+      // video2
       // 再生中の場合何もしない
       if (this.isPlaying2) return;
+
       const videoUrl2 =
-        "https://storage.googleapis.com/mahou_make/Assets/MAHOUMAKE_HLS/book2.m3u8";
+        "https://storage.googleapis.com/mahou_make/Assets/MAHOUMAKE_HLS/MAHOUMAKE2.m3u8";
       if (700 > this.scrollY) {
         const video2 = document.getElementById("video2");
-        // 再生中はplayVide1を無効化
+
+        // 再生中はplayVideを無効化
         this.isPlaying2 = true;
         // 終了時、再度再生できるようにする。
         video2.addEventListener("ended", (event) => {
           this.isPlaying2 = false;
         });
+
         if (Hls.isSupported()) {
           this.hls = new Hls();
           this.hls.loadSource(videoUrl2);
@@ -208,10 +218,13 @@ export default {
             playPromise
               .then((_) => {
                 this.timer1 = null;
-                if (this.timer1) clearTimeout(this.timer1);
-                this.timer1 = setTimeout(() => {
+                if (this.timer2) clearTimeout(this.timer2);
+                this.timer2 = setTimeout(() => {
                   playPromise;
+                  this.checkVideoPlay = true;
+                  console.log(this.checkVideoPlay);
                 }, 1000);
+                console.log("video play");
               })
               .catch((error) => {
                 console.log("error");
@@ -219,15 +232,15 @@ export default {
           }
         } else if (video2.canPlayType("application/vnd.apple.mpegurl")) {
           video2.src =
-            "https://storage.googleapis.com/mahou_make/Assets/MAHOUMAKE_HLS/book2.m3u8";
+            "https://storage.googleapis.com/mahou_make/Assets/MAHOUMAKE_HLS/MAHOUMAKE2.m3u8";
           video2.addEventListener("canplay", () => {
             var playPromise = video2.play();
             if (playPromise !== undefined) {
               playPromise
                 .then((_) => {
-                  this.timer1 = null;
-                  if (this.timer1) clearTimeout(this.timer1);
-                  this.timer1 = setTimeout(() => {
+                  this.timer2 = null;
+                  if (this.timer2) clearTimeout(this.timer2);
+                  this.timer2 = setTimeout(() => {
                     playPromise;
                     this.checkVideoPlay = true;
                   }, 1000);
@@ -244,8 +257,7 @@ export default {
   mounted() {
     this.squares = Array(200);
     window.addEventListener("scroll", () => {
-      this.playVide1();
-      this.playVide2();
+      this.playVide();
     });
   },
   computed: {
@@ -255,8 +267,7 @@ export default {
   },
   beforeDestroy() {
     window.removeEventListener("scroll", () => {
-      this.playVide1();
-      this.playVide2();
+      this.playVide();
     });
   },
 };
