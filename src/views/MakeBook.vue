@@ -6,24 +6,10 @@
       <div class="MAHOU_BOOK_SECTION">
         <div class="MAHOU_IMAGE">
           <div class="MAHOU_VIDEO">
-            <video
-              controls
-              muted
-              autoplay
-              playsinline
-              loop
-              src="https://storage.googleapis.com/mahou_make/Assets/mv1_32.mp4"
-            ></video>
+            <video id="video1" controls muted autoplay playsinline loop></video>
           </div>
           <div class="MAHOU_VIDEO">
-            <video
-              controls
-              muted
-              autoplay
-              playsinline
-              loop
-              src="https://storage.googleapis.com/mahou_make/Assets/mv2_32.mp4"
-            ></video>
+            <video id="video2" controls muted autoplay playsinline loop></video>
           </div>
         </div>
       </div>
@@ -122,11 +108,28 @@ import SectionPage from "../components/common/SectionPage";
 import HWrapper from "../components/common/HorizontalWrapper";
 import VRMonkey from "../components/vrmonkey/Vrmonkey";
 import Logo from "../components/logo/logo";
+import Hls from "hls.js";
 export default {
   data: () => {
     return {
       squares: [],
       docYScale: 5,
+      hls: new Hls(),
+      screenHeight: 0,
+      videoItems: [
+        {
+          id: "video1",
+          url:
+            "https://storage.googleapis.com/mahou_make/Assets/MAHOUMAKE_HLS/makebook1.m3u8",
+          playStatus: 0, // 0:未ロード, 1:再生中, 2:停止中
+        },
+        {
+          id: "video2",
+          url:
+            "https://storage.googleapis.com/mahou_make/Assets/MAHOUMAKE_HLS/MAHOUMAKE2.m3u8",
+          playStatus: 0, // 0:未ロード, 1:再生中, 2:停止中
+        },
+      ],
     };
   },
   components: {
@@ -137,13 +140,66 @@ export default {
     VRMonkey,
     Logo,
   },
+  methods: {
+    // 画選択処理
+    playVideo() {
+      this.videoItems.forEach((item) => {
+        this.videoProc(item);
+      });
+    },
+    // 動画再生処理
+    videoProc(item) {
+      const video = document.getElementById(item.id);
+      const videoUrl = item.url;
+
+      // ビデオの現在位置を取得
+      const videoTop = video.getBoundingClientRect().top;
+
+      if (this.screenHeight - (videoTop + 100) > 0 && videoTop + 100 > 0) {
+        // 動画が再生してたら何もしない
+        if (item.playStatus === 1) return;
+
+        // 動画再生が終了したら動画が再生成できるようにする
+        video.addEventListener("ended", () => {
+          item.playStatus = 0;
+        });
+
+        if (Hls.isSupported()) {
+          this.hls = new Hls();
+          this.hls.loadSource(videoUrl);
+          this.hls.attachMedia(video);
+          video.play();
+        }
+        // IOS Safariで再生する用
+        else if (video.canPlayType("application/vnd.apple.mpegurl")) {
+          video.src = item.url;
+          video.addEventListener("canplay", () => {
+            video.play();
+          });
+        }
+        // 動画最中はstatus1にする
+        item.playStatus = 1;
+      }
+    },
+  },
   mounted() {
     this.squares = Array(200);
+
+    window.addEventListener("scroll", () => {
+      this.playVideo();
+    });
+
+    this.screenHeight = window.innerHeight;
   },
   computed: {
     winHeight() {
       return window.innerHeight;
     },
+  },
+  beforeDestroy() {
+    window.removeEventListener("scroll", () => {
+      this.playVide();
+    });
   },
 };
 </script>

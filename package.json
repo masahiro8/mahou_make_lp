@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@vue/cli-plugin-babel": "4.1.1",
+    "hls.js": "0.14.16",
     "lodash": "4.17.20",
     "ress": "3.0.0",
     "sass": "1.26.11",
