@@ -115,12 +115,21 @@ export default {
       squares: [],
       docYScale: 5,
       hls: new Hls(),
-      isPlaying1: false,
-      isPlaying2: false,
-      timer1: null,
-      timer2: null,
-      checkVideoPlay: null,
       screenHeight: 0,
+      videoItems: [
+        {
+          id: "video1",
+          url:
+            "https://storage.googleapis.com/mahou_make/Assets/MAHOUMAKE_HLS/makebook1.m3u8",
+          playStatus: 0, // 0:未ロード, 1:再生中, 2:停止中
+        },
+        {
+          id: "video2",
+          url:
+            "https://storage.googleapis.com/mahou_make/Assets/MAHOUMAKE_HLS/MAHOUMAKE2.m3u8",
+          playStatus: 0, // 0:未ロード, 1:再生中, 2:停止中
+        },
+      ],
     };
   },
   components: {
@@ -132,133 +141,55 @@ export default {
     Logo,
   },
   methods: {
-    playVide() {
-      // video1
-      // 再生中の場合何もしない
-      if (this.isPlaying) return;
+    // 画選択処理
+    playVideo() {
+      this.videoItems.forEach((item) => {
+        this.videoProc(item);
+      });
+    },
+    // 動画再生処理
+    videoProc(item) {
+      const video = document.getElementById(item.id);
+      const videoUrl = item.url;
 
-      const videoUrl =
-        "https://storage.googleapis.com/mahou_make/Assets/MAHOUMAKE_HLS/makebook1.m3u8";
-      if (700 > this.scrollY) {
-        const video1 = document.getElementById("video1");
+      // ビデオの現在位置を取得
+      const videoTop = video.getBoundingClientRect().top;
 
-        // 再生中はplayVideを無効化
-        this.isPlaying = true;
-        // 終了時、再度再生できるようにする。
-        video1.addEventListener("ended", (event) => {
-          this.isPlaying = false;
+      if (this.screenHeight - (videoTop + 100) > 0 && videoTop + 100 > 0) {
+        // 動画が再生してたら何もしない
+        if (item.playStatus === 1) return;
+
+        // 動画再生が終了したら動画が再生成できるようにする
+        video.addEventListener("ended", () => {
+          item.playStatus = 0;
         });
 
         if (Hls.isSupported()) {
           this.hls = new Hls();
           this.hls.loadSource(videoUrl);
-          this.hls.attachMedia(video1);
-          var playPromise = video1.play();
-          if (playPromise !== undefined) {
-            playPromise
-              .then((_) => {
-                this.timer1 = null;
-                if (this.timer1) clearTimeout(this.timer1);
-                this.timer1 = setTimeout(() => {
-                  playPromise;
-                  this.checkVideoPlay = true;
-                  console.log(this.checkVideoPlay);
-                }, 1000);
-                console.log("video play");
-              })
-              .catch((error) => {
-                console.log("error");
-              });
-          }
-        } else if (video1.canPlayType("application/vnd.apple.mpegurl")) {
-          video1.src =
-            "https://storage.googleapis.com/mahou_make/Assets/MAHOUMAKE_HLS/makebook1.m3u8";
-          video1.addEventListener("canplay", () => {
-            var playPromise = video1.play();
-            if (playPromise !== undefined) {
-              playPromise
-                .then((_) => {
-                  this.timer1 = null;
-                  if (this.timer1) clearTimeout(this.timer1);
-                  this.timer1 = setTimeout(() => {
-                    playPromise;
-                    this.checkVideoPlay = true;
-                  }, 1000);
-                })
-                .catch((error) => {
-                  console.log("error");
-                });
-            }
+          this.hls.attachMedia(video);
+          video.play();
+        }
+        // IOS Safariで再生する用
+        else if (video.canPlayType("application/vnd.apple.mpegurl")) {
+          video.src = item.url;
+          video.addEventListener("canplay", () => {
+            video.play();
           });
         }
-      }
-
-      // video2
-      // 再生中の場合何もしない
-      if (this.isPlaying2) return;
-
-      const videoUrl2 =
-        "https://storage.googleapis.com/mahou_make/Assets/MAHOUMAKE_HLS/MAHOUMAKE2.m3u8";
-      if (700 > this.scrollY) {
-        const video2 = document.getElementById("video2");
-
-        // 再生中はplayVideを無効化
-        this.isPlaying2 = true;
-        // 終了時、再度再生できるようにする。
-        video2.addEventListener("ended", (event) => {
-          this.isPlaying2 = false;
-        });
-
-        if (Hls.isSupported()) {
-          this.hls = new Hls();
-          this.hls.loadSource(videoUrl2);
-          this.hls.attachMedia(video2);
-          var playPromise = video2.play();
-          if (playPromise !== undefined) {
-            playPromise
-              .then((_) => {
-                this.timer1 = null;
-                if (this.timer2) clearTimeout(this.timer2);
-                this.timer2 = setTimeout(() => {
-                  playPromise;
-                  this.checkVideoPlay = true;
-                  console.log(this.checkVideoPlay);
-                }, 1000);
-                console.log("video play");
-              })
-              .catch((error) => {
-                console.log("error");
-              });
-          }
-        } else if (video2.canPlayType("application/vnd.apple.mpegurl")) {
-          video2.src =
-            "https://storage.googleapis.com/mahou_make/Assets/MAHOUMAKE_HLS/MAHOUMAKE2.m3u8";
-          video2.addEventListener("canplay", () => {
-            var playPromise = video2.play();
-            if (playPromise !== undefined) {
-              playPromise
-                .then((_) => {
-                  this.timer2 = null;
-                  if (this.timer2) clearTimeout(this.timer2);
-                  this.timer2 = setTimeout(() => {
-                    playPromise;
-                    this.checkVideoPlay = true;
-                  }, 1000);
-                })
-                .catch((error) => {
-                  console.log("error");
-                });
-            }
-          });
-        }
+        // 動画最中はstatus1にする
+        item.playStatus = 1;
       }
     },
   },
   mounted() {
     this.squares = Array(200);
+
     window.addEventListener("scroll", () => {
-      this.playVide();
+      this.playVideo();
     });
+
+    this.screenHeight = window.innerHeight;
   },
   computed: {
     winHeight() {
