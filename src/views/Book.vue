@@ -52,7 +52,7 @@
                 type="text"
                 id="url"
                 name="url"
-                value=""
+                :value="defaultUrl"
                 placeholder="https://your-ec-site.com"
               />
               <input
@@ -118,6 +118,8 @@ export default {
       brands: [],
       images: [],
       modal: false,
+      currentProduct: null,
+      defaultUrl: null,
       url: null,
       json_book_name: null,
       createLink: false,
@@ -173,6 +175,11 @@ export default {
     openModal(id) {
       this.modal = true;
       this.json_book_name = id;
+      this.currentProduct = _.find(this.products, [
+        "jsonBookName",
+        this.json_book_name,
+      ]);
+      this.defaultUrl = this.currentProduct.link.url;
     },
     closeModal() {
       this.modal = false;
