@@ -40,7 +40,7 @@ import Lip from "../components/lip/Lip.vue";
 import Casset from "../components/casset/Casset";
 import Balloon from "../components/balloon/Balloon";
 import StartButton from "../components/startbutton/StartButton";
-import MahouBook from "../components/mahoubook/MahouBook";
+// import MahouBook from "../components/mahoubook/MahouBook";
 import VRMonkey from "../components/vrmonkey/Vrmonkey";
 
 export default {
@@ -59,7 +59,6 @@ export default {
     Casset,
     Balloon,
     StartButton,
-    MahouBook,
     VRMonkey,
   },
   mounted() {
