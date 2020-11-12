@@ -21,9 +21,6 @@
       </Balloon>
     </HWrapper>
     <HWrapper>
-      <MahouBook />
-    </HWrapper>
-    <HWrapper>
       <VRMonkey />
     </HWrapper>
     <!-- ここから背景 -->
